@@ -1,21 +1,32 @@
-﻿
-#include<bits/stdc++.h>
+﻿#include <bits/stdc++.h>
 using namespace std;
 
-string s;
-int cnt[26];
+vector<int> v(9);
+int sum;
 
-int main()
-{
-	cin >> s;
-	for (int i = 0; i < s.length(); ++i)
+int main() {
+	
+	for (int i = 0; i < 9; ++i)
 	{
-		cnt[s[i] - 'a']++;
+		cin >> v[i];
 	}
 
-	for (int i = 0; i < 26; ++i)
+	do
 	{
-		cout << cnt[i] << " ";
+		sum = 0;
+		for (int i = 0; i < 7; ++i)
+		{
+			sum += v[i];
+		}
+
+		if (sum == 100) break;
+
+	} while (next_permutation(v.begin(), v.end()));
+
+	sort(v.begin(), v.begin() + 7);
+	for (int i = 0; i < 7; ++i)
+	{
+		cout << v[i] << endl;
 	}
 
 	return 0;
