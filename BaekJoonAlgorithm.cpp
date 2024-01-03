@@ -1,11 +1,10 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-int n;
-map<int, int> m;
-int sum = 0;
+int m[101];
 int a, b, c;
 int bm, em;
+int sum;
 
 int main() 
 {
@@ -13,29 +12,17 @@ int main()
 	for (int i = 0; i < 3; ++i)
 	{
 		cin >> bm >> em;
-
-		for (int j = bm; j < em; ++j)
-		{
-			m[j]++;
-		}
+		for (int j = bm; j < em; ++j) m[j]++;
 	}
 
-	for (auto p : m)
+	for (int i = 1; i < 101; ++i)
 	{
-		if (p.second == 1)
-		{
-			sum += a;
-		}
-		else if (p.second == 2)
-		{
-			sum += 2 * b;
-		}
-		else
-		{
-			sum += 3 * c;
-		}
+		if (m[i] == 1) sum += 1 * a;
+		else if (m[i] == 2) sum += 2 * b;
+		else if(m[i] == 3) sum += 3 * c;
 	}
 
 	cout << sum << endl;
+
 	return 0;
 }
