@@ -1,33 +1,41 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> v(9);
-int sum;
+int n;
+map<int, int> m;
+int sum = 0;
+int a, b, c;
+int bm, em;
 
-int main() {
-	
-	for (int i = 0; i < 9; ++i)
+int main() 
+{
+	cin >> a >> b >> c;
+	for (int i = 0; i < 3; ++i)
 	{
-		cin >> v[i];
-	}
+		cin >> bm >> em;
 
-	do
-	{
-		sum = 0;
-		for (int i = 0; i < 7; ++i)
+		for (int j = bm; j < em; ++j)
 		{
-			sum += v[i];
+			m[j]++;
 		}
-
-		if (sum == 100) break;
-
-	} while (next_permutation(v.begin(), v.end()));
-
-	sort(v.begin(), v.begin() + 7);
-	for (int i = 0; i < 7; ++i)
-	{
-		cout << v[i] << endl;
 	}
 
+	for (auto p : m)
+	{
+		if (p.second == 1)
+		{
+			sum += a;
+		}
+		else if (p.second == 2)
+		{
+			sum += 2 * b;
+		}
+		else
+		{
+			sum += 3 * c;
+		}
+	}
+
+	cout << sum << endl;
 	return 0;
 }
