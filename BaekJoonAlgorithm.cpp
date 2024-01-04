@@ -1,17 +1,21 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-string s;
-string co;
-
+int n;
+int cnt[30];
+string s, ret;
 int main() 
 {
-	cin >> s;
-	
-	co = s;
-	std::reverse(co.begin(), co.end());
-	if (co == s) cout << 1 << endl;
-	else cout << 0 << endl;
-	
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> s;
+		cnt[s[0] - 'a']++;
+	}
+
+	for (int i = 0; i < 26; ++i) if (cnt[i] >= 5) ret += ('a' + i);
+	if (ret.size()) cout << ret;
+	else cout << "PREDAJA";
+
 	return 0;
 }
