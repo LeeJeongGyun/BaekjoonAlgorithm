@@ -1,35 +1,26 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
+int arr[100004];
+int n, k;
+int sum, gMax = INT_MIN;
+
 int main() 
 {
-	int n;
-	string suf, pre, s, pat;
-	cin >> n;
-	cin >> pat;
-
-	int pos = pat.find("*");
-	pre = pat.substr(0, pos);
-	suf = pat.substr(pos + 1); // 마지막까지 추출
-
+	cin >> n >> k;
 	for (int i = 0; i < n; ++i)
-	{
-		cin >> s;
-		if (pre.size() + suf.size() > s.size())
-		{
-			cout << "NE" << endl;
-			continue;
-		}
+		cin >> arr[i];
 
-		if (s.substr(0, pre.size()) == pre && s.substr(s.size() - suf.size()) == suf)
-		{
-			cout << "DA" << endl;
-		}
-		else
-		{
-			cout << "NE" << endl;
-		}
+	for (int i = 0; i < k; ++i) sum += arr[i];
+	gMax = sum;
+
+	for (int i = k; i < n; ++i)
+	{
+		sum += arr[i];
+		sum -= arr[i - k];
+		if (sum > gMax) gMax = sum;
 	}
 
+	cout << gMax << endl;
 	return 0;
 }
