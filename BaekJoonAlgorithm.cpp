@@ -1,21 +1,29 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-int n;
-int cnt[30];
-string s, ret;
+
 int main() 
 {
-	cin >> n;
-	for (int i = 0; i < n; ++i)
-	{
-		cin >> s;
-		cnt[s[0] - 'a']++;
-	}
+	string s;
+	getline(cin, s);
 
-	for (int i = 0; i < 26; ++i) if (cnt[i] >= 5) ret += ('a' + i);
-	if (ret.size()) cout << ret;
-	else cout << "PREDAJA";
+	for (int i = 0; i < s.size(); ++i)
+	{
+		if (s[i] == ' ' || isdigit(s[i])) cout << s[i];
+		else
+		{
+			if (isupper(s[i]))
+			{
+				if (s[i] + 13 >= 91) cout << (char)('A' + (s[i] + 13 - 91));
+				else cout << (char)(s[i] + 13);
+			}
+			else
+			{
+				if (s[i] + 13 >= 123) cout << (char)('a' + (s[i] + 13 - 123));
+				else cout << (char)(s[i] + 13);
+			}
+		}
+	}
 
 	return 0;
 }
