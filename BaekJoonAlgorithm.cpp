@@ -9,21 +9,18 @@ int main()
 
 	for (int i = 0; i < s.size(); ++i)
 	{
-		if (s[i] == ' ' || isdigit(s[i])) cout << s[i];
-		else
+		if (isupper(s[i]))
 		{
-			if (isupper(s[i]))
-			{
-				if (s[i] + 13 >= 91) cout << (char)('A' + (s[i] + 13 - 91));
-				else cout << (char)(s[i] + 13);
-			}
-			else
-			{
-				if (s[i] + 13 >= 123) cout << (char)('a' + (s[i] + 13 - 123));
-				else cout << (char)(s[i] + 13);
-			}
+			if (s[i] + 13 > 90) s[i] = s[i] + 13 - 26;
+			else s[i] = s[i] + 13;
+		}
+		else if (islower(s[i]))
+		{
+			if (s[i] + 13 > 122) s[i] = s[i] + 13 - 26;
+			else s[i] = s[i] + 13;
 		}
 	}
 
+	cout << s << endl;
 	return 0;
 }
