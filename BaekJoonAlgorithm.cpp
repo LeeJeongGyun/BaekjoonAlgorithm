@@ -1,26 +1,35 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-
 int main() 
 {
-	string s;
-	getline(cin, s);
+	int n;
+	string suf, pre, s, pat;
+	cin >> n;
+	cin >> pat;
 
-	for (int i = 0; i < s.size(); ++i)
+	int pos = pat.find("*");
+	pre = pat.substr(0, pos);
+	suf = pat.substr(pos + 1); // 마지막까지 추출
+
+	for (int i = 0; i < n; ++i)
 	{
-		if (isupper(s[i]))
+		cin >> s;
+		if (pre.size() + suf.size() > s.size())
 		{
-			if (s[i] + 13 > 90) s[i] = s[i] + 13 - 26;
-			else s[i] = s[i] + 13;
+			cout << "NE" << endl;
+			continue;
 		}
-		else if (islower(s[i]))
+
+		if (s.substr(0, pre.size()) == pre && s.substr(s.size() - suf.size()) == suf)
 		{
-			if (s[i] + 13 > 122) s[i] = s[i] + 13 - 26;
-			else s[i] = s[i] + 13;
+			cout << "DA" << endl;
+		}
+		else
+		{
+			cout << "NE" << endl;
 		}
 	}
 
-	cout << s << endl;
 	return 0;
 }
