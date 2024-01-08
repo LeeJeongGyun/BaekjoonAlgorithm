@@ -1,26 +1,36 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-int arr[100004];
-int n, k;
-int sum, gMax = INT_MIN;
+int n, m;
+map<string, int> m1;
+map<int, string> m2;
 
 int main() 
 {
-	cin >> n >> k;
-	for (int i = 0; i < n; ++i)
-		cin >> arr[i];
+	std::ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
 
-	for (int i = 0; i < k; ++i) sum += arr[i];
-	gMax = sum;
-
-	for (int i = k; i < n; ++i)
+	cin >> n >> m;
+	string s;
+	for (int i = 1; i <= n; ++i)
 	{
-		sum += arr[i];
-		sum -= arr[i - k];
-		if (sum > gMax) gMax = sum;
+		cin >> s;
+		m1[s] = i;
+		m2[i] = s;
 	}
 
-	cout << gMax << endl;
+	for (int i = 0; i < m; ++i)
+	{
+		cin >> s;
+
+		if (atoi(s.c_str()) != 0)
+		{
+			cout << m2[atoi(s.c_str())] << endl;
+		}
+		else
+		{
+			cout << m1[s] << endl;
+		}
+	}
 	return 0;
 }
