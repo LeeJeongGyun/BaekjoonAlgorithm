@@ -1,33 +1,35 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-int n, m;
-string input1, input2;
+int cnt[30];
+int oddCnt;
+char mid, ch;
 int main() 
 {
-	std::ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
-
-	cin >> n;
-	for (int i = 0; i < n; ++i)
+	string ret;
+	string s;
+	cin >> s;
+	for (char temp : s) cnt[temp - 'A']++;
+	
+	for (ch = 'Z'; ch >= 'A'; --ch)
 	{
-		map<string, int> gmap;
-		long long ans = 1;
-		cin >> m;
-		for (int i = 0; i < m; ++i)
+		if (cnt[ch - 'A'] & 1)
 		{
-			cin >> input1 >> input2;
-
-			gmap[input2]++;
+			oddCnt++;
+			cnt[ch - 'A']--;
+			mid = ch;
 		}
-
-		for (auto a : gmap)
+		if (oddCnt == 2) break;
+		for (int i = 0; i < cnt[ch - 'A']; i +=2 )
 		{
-			ans *= (long long)(a.second + 1);
+			ret = ch + ret;
+			ret += ch;
 		}
-		--ans;
-		cout << ans << endl;
 	}
+
+	if (mid) ret.insert(ret.begin() + ret.size() / 2, mid);
+	if (oddCnt == 2) cout << "I'm Sorry Hansoo\n";
+	else cout << ret << endl;
 
 	return 0;
 }
