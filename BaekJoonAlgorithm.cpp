@@ -1,35 +1,26 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-int cnt[30];
-int oddCnt;
-char mid, ch;
-int main() 
+int n, m;
+set<int> gs;
+int num;
+
+int main()
 {
-	string ret;
-	string s;
-	cin >> s;
-	for (char temp : s) cnt[temp - 'A']++;
-	
-	for (ch = 'Z'; ch >= 'A'; --ch)
+	cin >> n;
+	cin >> m;
+	for (int i = 0; i < n; ++i)
 	{
-		if (cnt[ch - 'A'] & 1)
-		{
-			oddCnt++;
-			cnt[ch - 'A']--;
-			mid = ch;
-		}
-		if (oddCnt == 2) break;
-		for (int i = 0; i < cnt[ch - 'A']; i +=2 )
-		{
-			ret = ch + ret;
-			ret += ch;
-		}
+		cin >> num;
+		gs.insert(num);
 	}
 
-	if (mid) ret.insert(ret.begin() + ret.size() / 2, mid);
-	if (oddCnt == 2) cout << "I'm Sorry Hansoo\n";
-	else cout << ret << endl;
+	int cnt = 0;
+	for (int a : gs)
+	{
+		if (gs.find(m - a) != gs.end()) cnt++;
+	}
 
+	cout << cnt / 2 << endl;
 	return 0;
 }
