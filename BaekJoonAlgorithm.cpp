@@ -2,8 +2,7 @@
 using namespace std;
 
 int n, m;
-set<int> gs;
-int num;
+int arr[15004];
 
 int main()
 {
@@ -11,16 +10,18 @@ int main()
 	cin >> m;
 	for (int i = 0; i < n; ++i)
 	{
-		cin >> num;
-		gs.insert(num);
+		cin >> arr[i];
 	}
 
 	int cnt = 0;
-	for (int a : gs)
+	for (int i = 0; i < n; ++i)
 	{
-		if (gs.find(m - a) != gs.end()) cnt++;
+		for (int j = i + 1; j < n; ++j)
+		{
+			if (arr[i] + arr[j] == m) cnt++;
+		}
 	}
 
-	cout << cnt / 2 << endl;
+	cout << cnt << endl;
 	return 0;
 }
