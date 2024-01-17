@@ -1,33 +1,20 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
+int x, y, z;
+
+long long go(long long a, long long b)
+{
+	if (b == 1) return a % z;
+	long long ret = go(a, b / 2);
+	ret = (ret * ret) % z;
+	if (b % 2 != 0) ret = (ret * a) % z;
+	return ret;
+}
 
 int main()
 {
-	int n, cnt = 0;
-	string s;
-	cin >> n;
+	cin >> x >> y >> z;
+	cout << go(x, y) << endl;
 
-	
-	for (int i = 0; i < n; ++i)
-	{
-		cin >> s;
-		stack<char> stk;
-		for(char ch : s)
-		{
-			if (stk.empty())
-			{
-				stk.push(ch);
-			}
-			else
-			{
-				if (ch == stk.top()) stk.pop();
-				else stk.push(ch);
-			}
-		}
-
-		if (stk.empty()) cnt++;
-	}
-
-	cout << cnt << endl;
 	return 0;
 }
