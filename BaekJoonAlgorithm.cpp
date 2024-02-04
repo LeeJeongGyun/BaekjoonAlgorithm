@@ -2,48 +2,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int gmap[104][104];
-int x, y;
+int t;
+int m, n, k, x, y;
+int gmap[54][54];
+int ans;
 int dx[] = { 0,1,0,-1 };
 int dy[] = { -1,0,1,0 };
-int dis[104][104];
+
+void DFS(int y, int x)
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		int ny = y + dy[i];
+		int nx = x + dx[i];
+
+		if (ny < 0 || ny >= n || nx < 0 || nx >= m || gmap[ny][nx] == 0) continue;
+		gmap[ny][nx] = 0;
+		DFS(ny, nx);
+	}
+}
 
 int main()
 {
-	cin >> y >> x;
-	string s;
-	for (int i = 1; i <= y; i++)
+	cin >> t;
+	for (int i = 0; i < t; ++i)
 	{
-		for (int j = 1; j <= x; ++j)
+		cin >> m >> n >> k;
+		memset(gmap, 0, sizeof(gmap));
+		ans = 0;
+		for (int j = 0; j < k; ++j)
 		{
-			scanf_s("%1d", &gmap[i][j]);
+			cin >> x >> y;
+			gmap[y][x] = 1;
 		}
-	}
 
-	dis[1][1] = 1;
-	queue<pair<int, int>> q;
-	q.push({ 1,1 });
-
-	int cy, cx;
-	while (!q.empty())
-	{
-		tie(cy, cx) = q.front(); q.pop();
-		if (cy == y && cx == x) break;
-
-		for (int i = 0; i < 4; ++i)
+		for (int y = 0; y < n; ++y)
 		{
-			int ny = cy + dy[i];
-			int nx = cx + dx[i];
-
-			if (ny < 1 || ny > y || nx < 1 || nx > x) continue;
-			if (gmap[ny][nx] == 0) continue;
-			if (dis[ny][nx] > 0) continue;
-
-			dis[ny][nx] = dis[cy][cx] + 1;
-			q.push({ ny,nx });
+			for (int x = 0; x < m; ++x)
+			{
+				if (gmap[y][x] == 1)
+				{
+					gmap[y][x] = 0;
+					DFS(y, x);
+					ans++;
+				}
+			}
 		}
+		
+		cout << ans << endl;
 	}
-
-	cout << dis[y][x] << endl;
 	return 0;
 }
