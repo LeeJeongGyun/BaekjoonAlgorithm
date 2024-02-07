@@ -2,62 +2,60 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-int ori[104][104];
-int check[104][104];
-int minH = 101, maxH = 0;
-int num, ans;
+int m, n, k;
+int x1, yy1, x2, y2;
+int gmap[104][104];
+int dx[] = { 0, 1, 0, -1 };
+int dy[] = { -1, 0, 1, 0 };
 
-int dx[] = { 0,1,0,-1 };
-int dy[] = { -1,0,1,0 };
+int cnt;
+vector<int> v;
 
-void DFS(int y, int x, int h)
+void DFS(int y , int x)
 {
-	check[y][x] = 1;
+	cnt++;
+	gmap[y][x] = 1;
 	for (int i = 0; i < 4; ++i)
 	{
 		int ny = y + dy[i];
 		int nx = x + dx[i];
-
-		if (ny < 0 || ny >= n || nx < 0 || nx >= n || ori[ny][nx] <= h || check[ny][nx] != 0) continue;
-		DFS(ny, nx, h);
+		if (ny < 0 || ny >= m || nx < 0 || nx >= n || gmap[ny][nx] == 1) continue;
+		DFS(ny, nx);
 	}
 }
 
 int main()
 {
-	cin >> n;
-	for (int i = 0; i < n; ++i)
+	cin >> m >> n >> k;
+
+	for (int i = 0; i < k; ++i)
+	{
+		cin >> x1 >> yy1 >> x2 >> y2;
+		for (int yy = yy1; yy < y2; ++yy)
+		{
+			for (int xx = x1; xx < x2; ++xx)
+			{
+				gmap[yy][xx] = 1;
+			}
+		}
+	}
+
+	for (int i = 0; i < m; ++i)
 	{
 		for (int j = 0; j < n; ++j)
 		{
-			cin >> ori[i][j];
-			maxH = max(maxH, ori[i][j]);
-			minH = min(minH, ori[i][j]);
-		}
-	}
-
-	for (int h = minH - 1; h <= maxH; ++h)
-	{
-		memset(check, 0, sizeof(check));
-
-		int total = 0;
-		for (int i = 0; i < n; ++i)
-		{
-			for (int j = 0; j < n; ++j)
+			if (gmap[i][j] == 0)
 			{
-				if (ori[i][j] > h && check[i][j] == 0)
-				{
-					DFS(i, j, h);
-					total++;
-				}
+				cnt = 0;
+				DFS(i, j);
+				v.push_back(cnt);
 			}
 		}
-
-		ans = max(ans, total);
 	}
 
-	cout << ans << endl;
+	std::sort(v.begin(), v.end());
+	cout << v.size() << endl;
+	for (int a : v) cout << a << " ";
 
 	return 0;
 }
