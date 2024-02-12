@@ -2,60 +2,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int m, n, k;
-int x1, yy1, x2, y2;
-int gmap[104][104];
-int dx[] = { 0, 1, 0, -1 };
-int dy[] = { -1, 0, 1, 0 };
+int n;
+char a[101][101];
 
-int cnt;
-vector<int> v;
-
-void DFS(int y , int x)
+string quard(int y, int x, int size)
 {
-	cnt++;
-	gmap[y][x] = 1;
-	for (int i = 0; i < 4; ++i)
+	if (size == 1) return string(1, a[y][x]);
+	char b = a[y][x];
+	string ret = "";
+	bool flag = false;
+	for (int yy = y; yy < y + size; ++yy)
 	{
-		int ny = y + dy[i];
-		int nx = x + dx[i];
-		if (ny < 0 || ny >= m || nx < 0 || nx >= n || gmap[ny][nx] == 1) continue;
-		DFS(ny, nx);
+		for (int xx = x; xx < x + size; ++xx)
+		{
+			if (b != a[yy][xx])
+			{
+				ret += '(';
+				// 4개로 쪼개진다.
+				int newSize = size / 2;
+				ret += quard(y, x, newSize);
+				ret += quard(y, x + newSize, newSize);
+				ret += quard(y + newSize, x, newSize);
+				ret += quard(y + newSize, x + newSize, newSize);
+				ret += ')';
+				return ret;
+			}
+		}
 	}
+
+	return string(1, a[y][x]);
 }
 
 int main()
 {
-	cin >> m >> n >> k;
-
-	for (int i = 0; i < k; ++i)
+	cin >> n;
+	for (int i = 0; i < n; ++i)
 	{
-		cin >> x1 >> yy1 >> x2 >> y2;
-		for (int yy = yy1; yy < y2; ++yy)
+		string s;
+		cin >> s;
+		for (int j = 0; j < s.size(); ++j)
 		{
-			for (int xx = x1; xx < x2; ++xx)
-			{
-				gmap[yy][xx] = 1;
-			}
+			a[i][j] = s[j];
 		}
 	}
-
-	for (int i = 0; i < m; ++i)
-	{
-		for (int j = 0; j < n; ++j)
-		{
-			if (gmap[i][j] == 0)
-			{
-				cnt = 0;
-				DFS(i, j);
-				v.push_back(cnt);
-			}
-		}
-	}
-
-	std::sort(v.begin(), v.end());
-	cout << v.size() << endl;
-	for (int a : v) cout << a << " ";
-
+	
+	string ans = quard(0, 0, n);
+	cout << ans << endl;
 	return 0;
 }
