@@ -2,51 +2,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-char a[101][101];
+int n, c;
 
-string quard(int y, int x, int size)
+int a[1005];
+vector<pair<int, int>> v;
+map<int, int> mp, mp_first;
+
+bool cmp(const pair<int, int>& a, const pair<int, int>& b)
 {
-	if (size == 1) return string(1, a[y][x]);
-	char b = a[y][x];
-	string ret = "";
-	bool flag = false;
-	for (int yy = y; yy < y + size; ++yy)
+	if (a.second == b.second)
 	{
-		for (int xx = x; xx < x + size; ++xx)
-		{
-			if (b != a[yy][xx])
-			{
-				ret += '(';
-				// 4개로 쪼개진다.
-				int newSize = size / 2;
-				ret += quard(y, x, newSize);
-				ret += quard(y, x + newSize, newSize);
-				ret += quard(y + newSize, x, newSize);
-				ret += quard(y + newSize, x + newSize, newSize);
-				ret += ')';
-				return ret;
-			}
-		}
+		return mp_first[a.first] < mp_first[b.first];
 	}
-
-	return string(1, a[y][x]);
+	else return a.second > b.second;
 }
 
 int main()
 {
-	cin >> n;
+	cin >> n >> c;
 	for (int i = 0; i < n; ++i)
 	{
-		string s;
-		cin >> s;
-		for (int j = 0; j < s.size(); ++j)
-		{
-			a[i][j] = s[j];
-		}
+		cin >> a[i];
+		mp[a[i]]++;
+		if (mp_first[a[i]] == 0) mp_first[a[i]] = i + 1;
 	}
 	
-	string ans = quard(0, 0, n);
-	cout << ans << endl;
+	for (auto& a : mp)
+	{
+		v.push_back({ a.first, a.second });
+	}
+
+	sort(v.begin(), v.end(), cmp);
+
+	for (int i = 0; i < v.size(); ++i)
+	{
+		for (int j = 0; j < v[i].second; ++j)
+		{
+			cout << v[i].first << " ";
+		}
+	}
+
 	return 0;
 }
